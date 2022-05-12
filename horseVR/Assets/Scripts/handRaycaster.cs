@@ -41,6 +41,8 @@ public class handRaycaster : MonoBehaviour
             if(e.target.gameObject.tag == "selectxy"){
                 print(e.point.x);
                 print(e.point.y);
+                gm.tempObjCor.XY = new Vector2(e.point.x,e.point.y);
+                GameObject.Find("SelectXY").SetActive(false);
             }
         }
         if(gm.gameState == GameManager.GameState.OBJSELECT){
@@ -48,10 +50,12 @@ public class handRaycaster : MonoBehaviour
                 if(e.target.name == "Block"){
                     gm.ChangeState(GameManager.GameState.XYSELECT);
                     Debug.Log("Block");
+                    GameObject.Find("SelectXY").SetActive(true);
                 }
                 if(e.target.name == "Target"){
                     gm.ChangeState(GameManager.GameState.XYSELECT);
                     Debug.Log("Target");
+                    GameObject.Find("SelectXY").SetActive(true);
                 }
                 if(e.target.name == "Ceiling"){
                     gm.ChangeState(GameManager.GameState.ZSELECT);
@@ -69,6 +73,7 @@ public class handRaycaster : MonoBehaviour
                     gm.ChangeState(GameManager.GameState.ZSELECT);
                     Debug.Log("Cylinder");
                 }
+                gm.tempObjCor.type = e.target.name;
                 gm.selectedObjName = e.target.name;
             }
         }
@@ -80,6 +85,11 @@ public class handRaycaster : MonoBehaviour
         if(gm.gameState == GameManager.GameState.ZSELECT){
             if(botao.GetStateDown(trackedObj.inputSource)){
                 GameObject.Find("Walls").transform.SendMessage("SendZ");
+            }
+        }
+        if(gm.gameState == GameManager.GameState.ROTATESELECT){
+            if(botao.GetStateDown(trackedObj.inputSource)){
+                GameObject.Find("CylinderSelect").transform.SendMessage("SendRotate");
             }
         }
     }

@@ -15,6 +15,7 @@ public class wallController : MonoBehaviour
     public SteamVR_Action_Boolean botao = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
     SteamVR_Behaviour_Pose trackedObj;
     private bool sendz = false;
+    private float distanceZ;
 
 
 
@@ -23,7 +24,6 @@ public class wallController : MonoBehaviour
     {
         gm = GameManager.GetInstance();
         actionSet.Activate(hand);
-        trackedObj = GetComponent<SteamVR_Behaviour_Pose>();
 
 
     }
@@ -38,9 +38,7 @@ public class wallController : MonoBehaviour
         if(gm.move){
             gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
         }
-        // if(botao.GetStateDown(trackedObj.inputSource)){
-        //     print("salve");
-        // }
+
         if(gm.gameState == GameManager.GameState.ZSELECT){
             Vector2 m = moveAction[hand].axis;
             gameObject.transform.position += new Vector3(0f, 0f, 5f* m.y * Time.deltaTime);
@@ -58,16 +56,19 @@ public class wallController : MonoBehaviour
                 sendz = false;
                 if(gm.selectedObjName == "Cylinder"){
                     gm.ChangeState(GameManager.GameState.ROTATESELECT);
+                    gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
                 }
                 else{
                     if(gm.playerIndex == gm.maxPlayers){
                         gm.ChangeState(GameManager.GameState.GAME);
+                        gm.PushBack();
+                        gm.ResetTemp();
                     }
                     else{
                         gm.ChangeState(GameManager.GameState.OBJSELECT);
                     }
                 }
-
+                gameObject.transform.position = new Vector3(0f,0f,0f);
             }
 
         }
