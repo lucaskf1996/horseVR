@@ -13,6 +13,9 @@ TagManager:
   - buttonBlock
   - ObjectSelection
   - selectxy
+  - '>'
+  - <
+  - Confirm
   layers:
   - Default
   - TransparentFX

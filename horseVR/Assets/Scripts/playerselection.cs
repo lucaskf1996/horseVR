@@ -8,6 +8,12 @@ public class playerselection : MonoBehaviour
 {
     public Button menos, mais;
     public Text text;
+    public int contador;
+
+    void Start(){
+        contador = 1;
+        text.text = Convert.ToString(contador);
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,15 +22,16 @@ public class playerselection : MonoBehaviour
     }
 
     public void increase(){
-        int players = Int32.TryParse(text.text);
-        players++;
-        text.text = players; 
+        contador++;
+        print("teste");
+        text.text = Convert.ToString(contador); 
     }    
 
     public void decrease(){
-        int players = Int32.TryParse(text.text);
-        players--;
-        text.text = players; 
+        if(contador!=1){
+            contador--;
+        }
+        text.text = Convert.ToString(contador); 
     }    
 }
 

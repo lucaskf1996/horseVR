@@ -40,8 +40,7 @@ public class barController : MonoBehaviour
     {
         
 
-        if(gm.move){
-            gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
+        if(gm.gameState == GameManager.GameState.GAME){
 
             if(right){
                 gameObject.transform.position += gameObject.transform.right * Time.deltaTime;

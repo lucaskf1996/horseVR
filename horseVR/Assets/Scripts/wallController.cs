@@ -52,9 +52,8 @@ public class wallController : MonoBehaviour
 
             }
             if(sendz){
-                print(gameObject.transform.position.z);
                 sendz = false;
-                if(gm.selectedObjName == "Cylinder"){
+                if(gm.selectedObjName == "CylinderSelect"){
                     gm.ChangeState(GameManager.GameState.ROTATESELECT);
                     gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
                 }
@@ -72,5 +71,6 @@ public class wallController : MonoBehaviour
             }
 
         }
+
     }
 }

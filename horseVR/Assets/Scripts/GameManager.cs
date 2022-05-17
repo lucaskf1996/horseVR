@@ -12,7 +12,7 @@ public class GameManager
     public static ChangeStateDelegate changeStateDelegate;
     public bool move;
     public string selectedObjName;
-    public enum GameState { OBJSELECT,XYSELECT,ZSELECT,ROTATESELECT, GAME};
+    public enum GameState {PLAYERSELECT, OBJSELECT,XYSELECT,ZSELECT,ROTATESELECT, GAME};
     public GameState gameState { get; private set; }
     public struct ObjCordinates {
         public string type;
@@ -42,6 +42,7 @@ public class GameManager
     public void ChangeState(GameState nextState)
     {
         gameState = nextState;
+        Debug.Log(gameState);
     }
     public void ResetTemp(){
         ObjCordinates tempObjCor = new ObjCordinates("", new Vector2(0f,0f), 0f,new Quaternion(0f,0f,0f,0f));
@@ -51,7 +52,7 @@ public class GameManager
     }
     private GameManager()
     {
-        gameState = GameState.ZSELECT;
+        gameState = GameState.OBJSELECT;
         playerIndex = 1;
         maxPlayers = 1;
         move = false;
