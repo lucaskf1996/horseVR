@@ -193,11 +193,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8384727107523869285, guid: 5f8a74b3641e5dc41b364b26ea279e32,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f8a74b3641e5dc41b364b26ea279e32, type: 3}
 --- !u!4 &24440992 stripped
@@ -337,7 +332,7 @@ RectTransform:
   - {fileID: 1398290703}
   - {fileID: 674008813}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1077,13 +1072,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171340835}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 5.56}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 5.52}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1908817460572070473}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1171340837
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1498,6 +1493,7 @@ MonoBehaviour:
   moveAction:
     actionPath: /actions/platformer/in/Move
     needsReinit: 0
+  Walls: {fileID: 1908817460572070472}
 --- !u!114 &1511322929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1535,6 +1531,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2129485368}
     m_Modifications:
+    - target: {fileID: 3144998502045118403, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_Name
+      value: PropellerChild
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998502045118403, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObjectSelection
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998503136312285, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_Name
+      value: PropellerChild
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998503136312285, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObjectSelection
+      objectReference: {fileID: 0}
     - target: {fileID: 3144998503211996002, guid: 848d6788e89a3ce4992fcb92364dfbcf,
         type: 3}
       propertyPath: m_RootOrder
@@ -1601,6 +1617,26 @@ PrefabInstance:
       value: PropellerSelect
       objectReference: {fileID: 0}
     - target: {fileID: 3144998503211996004, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObjectSelection
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998503220128212, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_Name
+      value: PropellerChild
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998503220128212, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObjectSelection
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998503552003647, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+        type: 3}
+      propertyPath: m_Name
+      value: PropellerChild
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144998503552003647, guid: 848d6788e89a3ce4992fcb92364dfbcf,
         type: 3}
       propertyPath: m_TagString
       value: ObjectSelection
@@ -2042,6 +2078,17 @@ MonoBehaviour:
   botao:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
+  Canvas: {fileID: 240701622}
+  SelectXY: {fileID: 1171340835}
+  Cylinder: {fileID: 4015364745014893371, guid: 18d5fedd4221bba43be2e52e78dd3fca,
+    type: 3}
+  HalfWall: {fileID: 7662167842498345806, guid: aefc2143b102b624a8a4f5239bb6caab,
+    type: 3}
+  Ceiling: {fileID: 2383228035955896864, guid: 5f8a74b3641e5dc41b364b26ea279e32, type: 3}
+  Block: {fileID: 5353298441357025290, guid: 6d5e2b43eb92f944085314cf0cc8b701, type: 3}
+  Propeller: {fileID: 3144998503211996004, guid: 848d6788e89a3ce4992fcb92364dfbcf,
+    type: 3}
+  Target: {fileID: 3549820372487916738, guid: 5d995b970f7eb3e488e2b852a0cfa977, type: 3}
 --- !u!114 &2093935662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2100,7 +2147,7 @@ Transform:
   - {fileID: 1083295653}
   - {fileID: 24440992}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1908817458822098344
 MeshFilter:
@@ -2488,6 +2535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1908817460572070473}
   - component: {fileID: 1908817460572070474}
+  - component: {fileID: 1908817460572070475}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -2535,3 +2583,15 @@ MonoBehaviour:
   botao:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
+--- !u!114 &1908817460572070475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908817460572070472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a479e886f441a459d3e49b61aac132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

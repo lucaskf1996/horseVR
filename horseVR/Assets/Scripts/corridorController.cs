@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ceilingController : MonoBehaviour
+public class corridorController : MonoBehaviour
 {
     GameManager gm;
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class ceilingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gm.move){
+        if(gm.gameState == GameManager.GameState.GAME){
             gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
         }
     }

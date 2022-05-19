@@ -15,7 +15,7 @@ public class propellerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gm.move){
+        if(gm.gameState == GameManager.GameState.GAME){
             gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
             transform.Rotate (new Vector3 (0, 0, 30) * Time.deltaTime);
         }

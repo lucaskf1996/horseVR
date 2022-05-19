@@ -35,10 +35,6 @@ public class wallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gm.move){
-            gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
-        }
-
         if(gm.gameState == GameManager.GameState.ZSELECT){
             Vector2 m = moveAction[hand].axis;
             gameObject.transform.position += new Vector3(0f, 0f, 5f* m.y * Time.deltaTime);
@@ -53,24 +49,25 @@ public class wallController : MonoBehaviour
             }
             if(sendz){
                 sendz = false;
-                if(gm.selectedObjName == "CylinderSelect"){
+                gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
+                if(gm.tempObjCor.type == "Cylinder"){
                     gm.ChangeState(GameManager.GameState.ROTATESELECT);
-                    gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
                 }
                 else{
+                    Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, transform);
+                    gm.PushBack();
+                    gm.ResetTemp();
                     if(gm.playerIndex == gm.maxPlayers){
+                        gm.playerIndex = 1;
                         gm.ChangeState(GameManager.GameState.GAME);
-                        gm.PushBack();
-                        gm.ResetTemp();
                     }
                     else{
+                        gm.playerIndex++;
                         gm.ChangeState(GameManager.GameState.OBJSELECT);
                     }
                 }
                 gameObject.transform.position = new Vector3(0f,0f,0f);
             }
-
         }
-
     }
 }

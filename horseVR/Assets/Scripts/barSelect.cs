@@ -12,7 +12,8 @@ public class barSelect : MonoBehaviour
     public SteamVR_Input_Sources hand;
 
     public SteamVR_Action_Vector2 moveAction;
-    private bool sendrotate = false;
+    // private bool sendrotate = false;
+    public GameObject Walls;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,17 @@ public class barSelect : MonoBehaviour
 
     }
     void SendRotate(){
-        sendrotate = true;
+        gm.tempObjCor.rotate = gameObject.transform.rotation;
+        if(gm.playerIndex == gm.maxPlayers){
+            gm.ChangeState(GameManager.GameState.GAME);
+        }
+        else{
+            gm.ChangeState(GameManager.GameState.OBJSELECT);
+        }
+        Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, Walls.transform);
+        gm.PushBack();
+        gm.ResetTemp();
+        print(gm.tempObjCor.rotate);
     }
 
     // Update is called once per frame
@@ -32,23 +43,9 @@ public class barSelect : MonoBehaviour
         
         if(gm.gameState == GameManager.GameState.ROTATESELECT){
             Vector2 m = moveAction[hand].axis;
-            print(m);
+            // print(m);
             transform.Rotate (new Vector3 (0, 0, m.y*60) * Time.deltaTime);
 
-        }
-        if(sendrotate){
-            print(gameObject.transform.rotation);
-            gm.tempObjCor.rotate = gameObject.transform.rotation;
-            sendrotate = false;
-            if(gm.playerIndex == gm.maxPlayers){
-                gm.ChangeState(GameManager.GameState.GAME);
-                gm.PushBack();
-                gm.ResetTemp();
-            }
-            else{
-                gm.ChangeState(GameManager.GameState.OBJSELECT);
-            }
-    
         }
     }
 }
