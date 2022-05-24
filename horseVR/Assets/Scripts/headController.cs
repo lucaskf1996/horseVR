@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class headController : MonoBehaviour
 {
+    GameManager gm;
+    wallController walls;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gm = GameManager.GetInstance();
+        walls = GameObject.Find("Walls").GetComponent<wallController>();
     }
 
     void OnTriggerEnter(Collider col)
     {
         if(col.gameObject.tag == "obstacle"){
-            Debug.Log("bateu");
+            gm.LifeList[gm.playerIndex-1]--;
+            gm.ChangePlayer();
+            walls.ResetWallPos();
+
+        }
+        else if(col.gameObject.tag == "Finish"){
+            gm.ChangePlayer();
+            walls.ResetWallPos();
         }
     }
 

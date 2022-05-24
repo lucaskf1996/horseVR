@@ -14,7 +14,8 @@ public class handRaycaster : MonoBehaviour
     GameManager gm;
     private SteamVR_LaserPointer steamVrLaserPointer;
     private float t;
-    private string objectName;public SteamVR_Action_Boolean botao = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
+    private string objectName;
+    public SteamVR_Action_Boolean botao = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
     SteamVR_Behaviour_Pose trackedObj;
     public GameObject Canvas, SelectXY, Cylinder, HalfWall, Ceiling, Block, Propeller, Target;
 
@@ -58,6 +59,7 @@ public class handRaycaster : MonoBehaviour
             }
             else if(e.target.gameObject.tag == "Confirm"){
                 gm.maxPlayers = Canvas.GetComponent<playerselection>().contador;
+                gm.CreateLifeList();
                 Canvas.SetActive(false);
                 gm.ChangeState(GameManager.GameState.OBJSELECT);
             }
@@ -130,6 +132,11 @@ public class handRaycaster : MonoBehaviour
     private void Update()
     {
         t += Time.deltaTime;
+        if((gm.gameState == GameManager.GameState.GAME) && (!gm.startGame)){
+            if(botao.GetStateDown(trackedObj.inputSource)){
+                gm.startGame = true;
+            }
+        }
         if(gm.gameState == GameManager.GameState.ZSELECT){
             if(botao.GetStateDown(trackedObj.inputSource)){
                 GameObject.Find("Walls").transform.SendMessage("SendZ");

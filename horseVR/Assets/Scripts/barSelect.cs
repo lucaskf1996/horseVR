@@ -29,6 +29,7 @@ public class barSelect : MonoBehaviour
             gm.ChangeState(GameManager.GameState.GAME);
         }
         else{
+            gm.playerIndex++;
             gm.ChangeState(GameManager.GameState.OBJSELECT);
         }
         Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, Walls.transform);

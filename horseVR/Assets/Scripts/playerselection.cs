@@ -23,7 +23,6 @@ public class playerselection : MonoBehaviour
 
     public void increase(){
         contador++;
-        print("teste");
         text.text = Convert.ToString(contador); 
     }    
 

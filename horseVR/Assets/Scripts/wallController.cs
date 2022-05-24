@@ -31,11 +31,18 @@ public class wallController : MonoBehaviour
     void SendZ(){
         sendz = true;
     }
+    public void ResetWallPos(){
+        gameObject.transform.position = new Vector3(0f, 0f, 0f);
 
+    }
     // Update is called once per frame
     void Update()
     {
-        if(gm.gameState == GameManager.GameState.ZSELECT){
+        if((gm.gameState == GameManager.GameState.GAME) && (gm.startGame)){
+            print("startGame: "+gm.startGame);
+            gameObject.transform.position += new Vector3(0f, 0f, -6f * Time.deltaTime);
+        }
+        else if(gm.gameState == GameManager.GameState.ZSELECT){
             Vector2 m = moveAction[hand].axis;
             gameObject.transform.position += new Vector3(0f, 0f, 5f* m.y * Time.deltaTime);
 
@@ -44,7 +51,7 @@ public class wallController : MonoBehaviour
 
             }
             else if(gameObject.transform.position.z >0.5f){
-                gameObject.transform.position = new Vector3(0f, 0f, 0f);
+                ResetWallPos();
 
             }
             if(sendz){
@@ -58,7 +65,6 @@ public class wallController : MonoBehaviour
                     gm.PushBack();
                     gm.ResetTemp();
                     if(gm.playerIndex == gm.maxPlayers){
-                        gm.playerIndex = 1;
                         gm.ChangeState(GameManager.GameState.GAME);
                     }
                     else{

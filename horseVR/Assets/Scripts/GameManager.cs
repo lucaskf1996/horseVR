@@ -9,10 +9,11 @@ public class GameManager
     private static GameManager _instance;
     public int maxPlayers;
     public int playerIndex;
+    private int lifes = 1;
 
     public delegate void ChangeStateDelegate();
     public static ChangeStateDelegate changeStateDelegate;
-    public bool move;
+    public bool startGame = false;
     public GameObject Block;
     // public string selectedObjName;
     public enum GameState {PLAYERSELECT, OBJSELECT,XYSELECT,ZSELECT,ROTATESELECT, GAME};
@@ -33,6 +34,7 @@ public class GameManager
         }
     }
     public List<ObjCordinates> ObjCorList = new List<ObjCordinates>();
+    public List<int> LifeList = new List<int>();
 
     public ObjCordinates tempObjCor;
 
@@ -46,6 +48,10 @@ public class GameManager
     }
     public void ChangeState(GameState nextState)
     {
+        if((nextState == GameState.GAME)){
+                playerIndex = 1;
+                Debug.Log(startGame);
+        }
         if((nextState == GameState.GAME) ||  (nextState == GameState.OBJSELECT)){
             foreach (int value in Enumerable.Range(0, GameObject.Find("ObjectSelection").transform.childCount)){
                 GameObject.Find("ObjectSelection").transform.GetChild(value).transform.SendMessage("ResetPos");
@@ -64,12 +70,30 @@ public class GameManager
     public void PushBack(){
         ObjCorList.Add(tempObjCor);
     }
+    public void CreateLifeList(){
+        for(int player = 0;player < maxPlayers;player++){
+            LifeList.Add(lifes);
+        }
+    }
+    public void ChangePlayer(){
+        playerIndex += 1;
+        startGame = false;
+        int contador = 0;
+        while(LifeList[playerIndex-1] <= 0){
+            playerIndex+=1;
+            //ver a lista e checar se so tem um player com vida
+        }   
+        if(playerIndex > maxPlayers){
+            ChangeState(GameManager.GameState.OBJSELECT);
+            playerIndex = 1;
+        }
+    }
     private GameManager()
     {
         gameState = GameState.PLAYERSELECT;
         playerIndex = 1;
         maxPlayers = 1;
-        move = false;
+        startGame = false;
 
     }
 

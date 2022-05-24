@@ -15,9 +15,6 @@ public class targetController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gm.move){
-            gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
-        }
 
     }
 }
