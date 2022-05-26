@@ -16,7 +16,7 @@ public class propellerController : MonoBehaviour
     void Update()
     {
         if(gm.gameState == GameManager.GameState.GAME){
-            gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
+            //gameObject.transform.position += new Vector3(0f, 0f, -1f * Time.deltaTime);
             transform.Rotate (new Vector3 (0, 0, 30) * Time.deltaTime);
         }
     }

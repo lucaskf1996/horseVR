@@ -73,6 +73,21 @@ public class handRaycaster : MonoBehaviour
                 InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
             }
         }
+        if(gm.gameState == GameManager.GameState.SIDESELECT){
+            if(e.target.gameObject.tag == "selectxy"){
+                // gm.tempObjCor.XY = new Vector2(e.point.x,e.point.y);
+                if(e.point.x > 0){
+                    gm.tempObjCor.XY = new Vector2(0.38f, 1f);
+                }
+                else{
+                    gm.tempObjCor.XY = new Vector2(-0.38f, 1f);
+                }
+                // print(gm.tempObjCor.XY);
+                SelectXY.SetActive(false);
+                gm.ChangeState(GameManager.GameState.ZSELECT);
+                InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
+            }
+        }
         if(gm.gameState == GameManager.GameState.OBJSELECT){
             if(e.target.tag == "ObjectSelection"){
                 if(e.target.name == "BlockSelect"){
@@ -101,9 +116,8 @@ public class handRaycaster : MonoBehaviour
                 if(e.target.name == "HalfWallSelect"){
                     gm.tempObjCor.prefab = HalfWall;
                     gm.tempObjCor.type = "HalfWall";
-                    gm.tempObjCor.XY = new Vector2(0.38f, 1f);
-                    gm.ChangeState(GameManager.GameState.ZSELECT);
-                    InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
+                    gm.ChangeState(GameManager.GameState.SIDESELECT);
+                    SelectXY.SetActive(true);
                     // Debug.Log("HalfWall");
                 }
                 if(e.target.name == "PropellerChild"){
@@ -112,7 +126,7 @@ public class handRaycaster : MonoBehaviour
                     gm.tempObjCor.XY = new Vector2(0f, 1f);
                     gm.ChangeState(GameManager.GameState.ZSELECT);
                     InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
-                    Debug.Log("Propeller");
+                    // Debug.Log("Propeller");
                 }
                 if(e.target.name == "CylinderSelect"){
                     gm.tempObjCor.prefab = Cylinder;
@@ -122,9 +136,6 @@ public class handRaycaster : MonoBehaviour
                     InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
                     // Debug.Log("Cylinder");
                 }
-
-                // gm.tempObjCor.type = e.target.name;
-                // gm.selectedObjName = e.target.name;
             }
         }
     }

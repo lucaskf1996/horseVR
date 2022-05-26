@@ -10,13 +10,13 @@ public class GameManager
     public int maxPlayers;
     public int playerIndex;
     private int lifes = 1;
-
+    private bool gameEnd;
     public delegate void ChangeStateDelegate();
     public static ChangeStateDelegate changeStateDelegate;
-    public bool startGame = false;
+    public bool startGame;
     public GameObject Block;
     // public string selectedObjName;
-    public enum GameState {PLAYERSELECT, OBJSELECT,XYSELECT,ZSELECT,ROTATESELECT, GAME};
+    public enum GameState {PLAYERSELECT, OBJSELECT,XYSELECT,ZSELECT, SIDESELECT,ROTATESELECT, GAME, END};
     public GameState gameState { get; private set; }
     public struct ObjCordinates {
         public string type;
@@ -50,7 +50,6 @@ public class GameManager
     {
         if((nextState == GameState.GAME)){
                 playerIndex = 1;
-                Debug.Log(startGame);
         }
         if((nextState == GameState.GAME) ||  (nextState == GameState.OBJSELECT)){
             foreach (int value in Enumerable.Range(0, GameObject.Find("ObjectSelection").transform.childCount)){
@@ -68,6 +67,7 @@ public class GameManager
         tempObjCor.rotate = new Quaternion(0f,0f,0f,0f);
     }
     public void PushBack(){
+        Debug.Log(tempObjCor.Z);
         ObjCorList.Add(tempObjCor);
     }
     public void CreateLifeList(){
@@ -78,23 +78,41 @@ public class GameManager
     public void ChangePlayer(){
         playerIndex += 1;
         startGame = false;
-        int contador = 0;
-        while(LifeList[playerIndex-1] <= 0){
-            playerIndex+=1;
-            //ver a lista e checar se so tem um player com vida
-        }   
-        if(playerIndex > maxPlayers){
+        checkLives();
+        if(playerIndex > maxPlayers && gameState == GameState.GAME){
             ChangeState(GameManager.GameState.OBJSELECT);
             playerIndex = 1;
         }
     }
+
+    public void checkLives(){
+        int contador = 0;
+        if(maxPlayers != 1){
+            foreach(int player in LifeList){
+                if(player==-1){
+                    contador++;
+                }
+            }
+            if(contador==maxPlayers-1){
+                ChangeState(GameManager.GameState.END);
+            }
+        }
+        else{
+            if(LifeList[0]==-1){
+                ChangeState(GameManager.GameState.END);
+            }
+        }
+
+    }
+
     private GameManager()
     {
         gameState = GameState.PLAYERSELECT;
         playerIndex = 1;
         maxPlayers = 1;
         startGame = false;
-
+        gameEnd = false;
+        startGame = false;
     }
 
 }

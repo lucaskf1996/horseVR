@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -16,7 +17,6 @@ public class wallController : MonoBehaviour
     SteamVR_Behaviour_Pose trackedObj;
     private bool sendz = false;
     private float distanceZ;
-
 
 
     // Start is called before the first frame update
@@ -39,7 +39,7 @@ public class wallController : MonoBehaviour
     void Update()
     {
         if((gm.gameState == GameManager.GameState.GAME) && (gm.startGame)){
-            print("startGame: "+gm.startGame);
+            print("startGame: "+ gm.startGame);
             gameObject.transform.position += new Vector3(0f, 0f, -6f * Time.deltaTime);
         }
         else if(gm.gameState == GameManager.GameState.ZSELECT){
@@ -56,24 +56,36 @@ public class wallController : MonoBehaviour
             }
             if(sendz){
                 sendz = false;
-                gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
-                if(gm.tempObjCor.type == "Cylinder"){
-                    gm.ChangeState(GameManager.GameState.ROTATESELECT);
-                }
-                else{
-                    Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, transform);
-                    gm.PushBack();
-                    gm.ResetTemp();
-                    if(gm.playerIndex == gm.maxPlayers){
-                        gm.ChangeState(GameManager.GameState.GAME);
+                bool validCor  = CheckZIfCordValid(-gameObject.transform.position.z + 5f);
+                if(validCor){
+                    gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
+                    if(gm.tempObjCor.type == "Cylinder"){
+                        gm.ChangeState(GameManager.GameState.ROTATESELECT);
                     }
                     else{
-                        gm.playerIndex++;
-                        gm.ChangeState(GameManager.GameState.OBJSELECT);
+                        Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, transform);
+                        gm.PushBack();
+                        gm.ResetTemp();
+                        if(gm.playerIndex == gm.maxPlayers){
+                            gm.ChangeState(GameManager.GameState.GAME);
+                        }
+                        else{
+                            gm.playerIndex++;
+                            gm.ChangeState(GameManager.GameState.OBJSELECT);
+                        }
                     }
+                    gameObject.transform.position = new Vector3(0f,0f,0f);
                 }
-                gameObject.transform.position = new Vector3(0f,0f,0f);
             }
         }
+    }
+    public bool CheckZIfCordValid(float wantedCord){
+        float offset = 1f;
+        foreach(GameManager.ObjCordinates cordinate in gm.ObjCorList){
+            if(Math.Abs(Math.Abs(cordinate.Z)- Math.Abs(wantedCord)) < offset){
+                return false;
+            }
+        }
+        return true;
     }
 }

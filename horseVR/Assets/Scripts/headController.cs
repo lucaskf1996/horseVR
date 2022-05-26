@@ -16,15 +16,17 @@ public class headController : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "obstacle"){
-            gm.LifeList[gm.playerIndex-1]--;
-            gm.ChangePlayer();
-            walls.ResetWallPos();
+        if(gm.gameState == GameManager.GameState.GAME){
+            if(col.gameObject.tag == "obstacle"){
+                gm.LifeList[gm.playerIndex-1]--;
+                gm.ChangePlayer();
+                walls.ResetWallPos();
 
-        }
-        else if(col.gameObject.tag == "Finish"){
-            gm.ChangePlayer();
-            walls.ResetWallPos();
+            }
+            else if(col.gameObject.tag == "Finish"){
+                gm.ChangePlayer();
+                walls.ResetWallPos();
+            }
         }
     }
 
