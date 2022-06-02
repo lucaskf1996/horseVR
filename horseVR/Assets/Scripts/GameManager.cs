@@ -51,6 +51,9 @@ public class GameManager
         if((nextState == GameState.GAME)){
                 playerIndex = 1;
         }
+        if((nextState == GameState.END)){
+            //ACABAR O JOGO
+        }
         if((nextState == GameState.GAME) ||  (nextState == GameState.OBJSELECT)){
             foreach (int value in Enumerable.Range(0, GameObject.Find("ObjectSelection").transform.childCount)){
                 GameObject.Find("ObjectSelection").transform.GetChild(value).transform.SendMessage("ResetPos");
@@ -67,8 +70,8 @@ public class GameManager
         tempObjCor.rotate = new Quaternion(0f,0f,0f,0f);
     }
     public void PushBack(){
-        Debug.Log(tempObjCor.Z);
         ObjCorList.Add(tempObjCor);
+        ResetTemp();
     }
     public void CreateLifeList(){
         for(int player = 0;player < maxPlayers;player++){

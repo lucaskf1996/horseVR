@@ -39,7 +39,6 @@ public class wallController : MonoBehaviour
     void Update()
     {
         if((gm.gameState == GameManager.GameState.GAME) && (gm.startGame)){
-            print("startGame: "+ gm.startGame);
             gameObject.transform.position += new Vector3(0f, 0f, -6f * Time.deltaTime);
         }
         else if(gm.gameState == GameManager.GameState.ZSELECT){
@@ -58,14 +57,14 @@ public class wallController : MonoBehaviour
                 sendz = false;
                 bool validCor  = CheckZIfCordValid(-gameObject.transform.position.z + 5f);
                 if(validCor){
-                    gm.tempObjCor.Z = -gameObject.transform.position.z + 5f;
+                    gm.tempObjCor.Z = Math.Abs(gameObject.transform.position.z) + 5f;
                     if(gm.tempObjCor.type == "Cylinder"){
                         gm.ChangeState(GameManager.GameState.ROTATESELECT);
                     }
                     else{
+                        gameObject.transform.position = new Vector3(0f,0f,0f);
                         Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, transform);
                         gm.PushBack();
-                        gm.ResetTemp();
                         if(gm.playerIndex == gm.maxPlayers){
                             gm.ChangeState(GameManager.GameState.GAME);
                         }

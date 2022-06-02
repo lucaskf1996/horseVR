@@ -34,8 +34,8 @@ public class barSelect : MonoBehaviour
         }
         Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, Walls.transform);
         gm.PushBack();
-        gm.ResetTemp();
-        print(gm.tempObjCor.rotate);
+        // gm.ResetTemp();
+        // print(gm.tempObjCor.rotate);
     }
 
     // Update is called once per frame
