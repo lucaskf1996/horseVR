@@ -17,6 +17,9 @@ TagManager:
   - <
   - Confirm
   - PropellerChild
+  - CanvasHelperText
+  - CanvasHelperAction
+  - CanvasLives
   layers:
   - Default
   - TransparentFX

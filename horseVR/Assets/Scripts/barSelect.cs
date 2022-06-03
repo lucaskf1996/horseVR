@@ -25,13 +25,18 @@ public class barSelect : MonoBehaviour
     }
     void SendRotate(){
         gm.tempObjCor.rotate = gameObject.transform.rotation;
-        if(gm.playerIndex == gm.maxPlayers){
-            gm.ChangeState(GameManager.GameState.GAME);
-        }
-        else{
-            gm.playerIndex++;
-            gm.ChangeState(GameManager.GameState.OBJSELECT);
-        }
+
+        gm.ChangePlayer();
+        // if(gm.playerIndex == gm.maxPlayers){
+        //     // gm.playerIndex = 1;
+        //     gm.ChangePlayer();
+        //     gm.ChangeState(GameManager.GameState.GAME);
+        // }
+        // else{
+        //     // gm.playerIndex++;
+        //     gm.ChangePlayer();
+        //     gm.ChangeState(GameManager.GameState.OBJSELECT);
+        // }
         Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, Walls.transform);
         gm.PushBack();
         // gm.ResetTemp();

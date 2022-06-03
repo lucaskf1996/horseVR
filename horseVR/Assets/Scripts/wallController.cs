@@ -39,7 +39,7 @@ public class wallController : MonoBehaviour
     void Update()
     {
         if((gm.gameState == GameManager.GameState.GAME) && (gm.startGame)){
-            gameObject.transform.position += new Vector3(0f, 0f, -6f * Time.deltaTime);
+            gameObject.transform.position += new Vector3(0f, 0f, -4f * Time.deltaTime);
         }
         else if(gm.gameState == GameManager.GameState.ZSELECT){
             Vector2 m = moveAction[hand].axis;
@@ -65,13 +65,18 @@ public class wallController : MonoBehaviour
                         gameObject.transform.position = new Vector3(0f,0f,0f);
                         Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, transform);
                         gm.PushBack();
-                        if(gm.playerIndex == gm.maxPlayers){
-                            gm.ChangeState(GameManager.GameState.GAME);
-                        }
-                        else{
-                            gm.playerIndex++;
-                            gm.ChangeState(GameManager.GameState.OBJSELECT);
-                        }
+
+                        gm.ChangePlayer();
+                        // if(gm.playerIndex == gm.maxPlayers){
+                        //     // gm.playerIndex = 1;
+                        //     gm.ChangePlayer();
+                        //     gm.ChangeState(GameManager.GameState.GAME);
+                        // }
+                        // else{
+                        //     // gm.playerIndex++;
+                        //     gm.ChangePlayer();
+                        //     gm.ChangeState(GameManager.GameState.OBJSELECT);
+                        // }
                     }
                     gameObject.transform.position = new Vector3(0f,0f,0f);
                 }

@@ -7,6 +7,7 @@ using Valve.VR;
 using Valve.VR.InteractionSystem;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class handRaycaster : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class handRaycaster : MonoBehaviour
     {
         if(t>1f)
         {
-            Debug.Log("objeto clicado com o laser " + e.target.name);
+            // Debug.Log("objeto clicado com o laser " + e.target.name);
             t = 0f;
             if(e.target.gameObject.tag == "target"){
                 Destroy(e.target.gameObject);
@@ -64,7 +65,12 @@ public class handRaycaster : MonoBehaviour
                 gm.ChangeState(GameManager.GameState.OBJSELECT);
             }
         }
-        if(gm.gameState == GameManager.GameState.XYSELECT){
+        else if(gm.gameState == GameManager.GameState.END){
+            if(e.target.gameObject.tag == "Respawn"){
+                SceneManager.LoadScene("Planing", LoadSceneMode.Single);
+            }
+        }
+        else if(gm.gameState == GameManager.GameState.XYSELECT){
             if(e.target.gameObject.tag == "selectxy"){
                 gm.tempObjCor.XY = new Vector2(e.point.x,e.point.y);
                 // print(gm.tempObjCor.XY);
@@ -73,7 +79,7 @@ public class handRaycaster : MonoBehaviour
                 InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
             }
         }
-        if(gm.gameState == GameManager.GameState.SIDESELECT){
+        else if(gm.gameState == GameManager.GameState.SIDESELECT){
             if(e.target.gameObject.tag == "selectxy"){
                 // gm.tempObjCor.XY = new Vector2(e.point.x,e.point.y);
                 if(e.point.x > 0){
@@ -88,7 +94,7 @@ public class handRaycaster : MonoBehaviour
                 InstantiateSelect(gm.tempObjCor.XY, gm.tempObjCor.type);
             }
         }
-        if(gm.gameState == GameManager.GameState.OBJSELECT){
+        else if(gm.gameState == GameManager.GameState.OBJSELECT){
             if(e.target.tag == "ObjectSelection"){
                 if(e.target.name == "BlockSelect"){
                     gm.tempObjCor.prefab = Block;
