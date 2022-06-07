@@ -16,12 +16,9 @@ public class headController : MonoBehaviour
         CanvasHelperLives = GameObject.FindWithTag("CanvasLives").GetComponent<Text>();
         gm = GameManager.GetInstance();
         walls = GameObject.Find("Walls").GetComponent<wallController>();
-        horse[5] = "";
-        horse[4] = "H";
-        horse[3] = "HO";
-        horse[2] = "HOR";
-        horse[1] = "HORS";
-        horse[0] = "HORSE";
+        horse[2] = "";
+        horse[1] = "G";
+        horse[0] = "GG";
     }
 
     void OnTriggerEnter(Collider col)
@@ -46,7 +43,7 @@ public class headController : MonoBehaviour
     {  
         string scoreBoard = "";
         for(int i = 1; i<=gm.maxPlayers; i++){
-            scoreBoard += "Player " + i + "  " + horse[gm.LifeList[i-1]+1] + "\n";
+            scoreBoard += "Player " + i + "  " + horse[gm.LifeList[i-1]] + "\n";
         }
         return scoreBoard;
     }

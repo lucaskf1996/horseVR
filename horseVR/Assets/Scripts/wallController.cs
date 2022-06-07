@@ -27,7 +27,6 @@ public class wallController : MonoBehaviour
 
 
     }
-
     void SendZ(){
         sendz = true;
     }
@@ -39,7 +38,7 @@ public class wallController : MonoBehaviour
     void Update()
     {
         if((gm.gameState == GameManager.GameState.GAME) && (gm.startGame)){
-            gameObject.transform.position += new Vector3(0f, 0f, -4f * Time.deltaTime);
+            gameObject.transform.position += new Vector3(0f, 0f, -4f * Time.deltaTime* gm.multiplier);
         }
         else if(gm.gameState == GameManager.GameState.ZSELECT){
             Vector2 m = moveAction[hand].axis;
@@ -55,41 +54,43 @@ public class wallController : MonoBehaviour
             }
             if(sendz){
                 sendz = false;
-                bool validCor  = CheckZIfCordValid(-gameObject.transform.position.z + 5f);
+                bool validCor  = CheckZIfCordValid(Math.Abs(gameObject.transform.position.z) + 5f);
                 if(validCor){
                     gm.tempObjCor.Z = Math.Abs(gameObject.transform.position.z) + 5f;
                     if(gm.tempObjCor.type == "Cylinder"){
                         gm.ChangeState(GameManager.GameState.ROTATESELECT);
                     }
                     else{
-                        gameObject.transform.position = new Vector3(0f,0f,0f);
+                        gameObject.transform.position = new Vector3(0f,0.01f,0f);
                         Instantiate(gm.tempObjCor.prefab, new Vector3(gm.tempObjCor.XY.x, gm.tempObjCor.XY.y, gm.tempObjCor.Z), gm.tempObjCor.rotate, transform);
                         gm.PushBack();
 
                         gm.ChangePlayer();
-                        // if(gm.playerIndex == gm.maxPlayers){
-                        //     // gm.playerIndex = 1;
-                        //     gm.ChangePlayer();
-                        //     gm.ChangeState(GameManager.GameState.GAME);
-                        // }
-                        // else{
-                        //     // gm.playerIndex++;
-                        //     gm.ChangePlayer();
-                        //     gm.ChangeState(GameManager.GameState.OBJSELECT);
-                        // }
+
                     }
-                    gameObject.transform.position = new Vector3(0f,0f,0f);
+                    gameObject.transform.position = new Vector3(0f,0.01f,0f);
+                }
+                else{
+                    gameObject.GetComponent<AudioSource>().Play();
                 }
             }
         }
     }
     public bool CheckZIfCordValid(float wantedCord){
-        float offset = 1f;
+        float offset = 0.7f;
         foreach(GameManager.ObjCordinates cordinate in gm.ObjCorList){
             if(Math.Abs(Math.Abs(cordinate.Z)- Math.Abs(wantedCord)) < offset){
                 return false;
             }
         }
         return true;
+    }
+
+    public void DestroyChildren(){
+        foreach(GameObject child in transform){
+            if(child.name != "Plane" && child.name != "SelectXY" && child.name != "WallFinish"){
+                Destroy(child);
+            }
+        }
     }
 }

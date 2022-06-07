@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager
 {
+    private GameObject Walls;
     private static GameManager _instance;
     private Text CanvasHelperPlayerIndex;
     private Text CanvasHelperAction;
@@ -14,12 +15,13 @@ public class GameManager
     private GameObject CanvasEnd;
     public int maxPlayers;
     public int playerIndex;
-    private int lifes = 5;
-    private bool gameEnd;
+    private int lifes = 2;
     public delegate void ChangeStateDelegate();
     public static ChangeStateDelegate changeStateDelegate;
     public bool startGame;
+    public bool resetGame;
     private int winIndex;
+    public float multiplier = 1f;
     public GameObject Block;
     // public string selectedObjName;
     public enum GameState {PLAYERSELECT, OBJSELECT,XYSELECT,ZSELECT, SIDESELECT,ROTATESELECT, GAME, END};
@@ -83,6 +85,9 @@ public class GameManager
             }
             CanvasHelperPlayerIndex.text = "Player "+ playerIndex;
         }
+        if(gameState == GameState.GAME && nextState == GameState.OBJSELECT){
+            multiplier+=0.2f;
+        }
         if(gameState == GameState.PLAYERSELECT && nextState == GameState.OBJSELECT){
             string scoreBoard = "";
             for(int i = 1; i<=maxPlayers; i++){
@@ -91,8 +96,6 @@ public class GameManager
             CanvasHelperLives.text = scoreBoard;
         }
         gameState = nextState;
-        // Debug.Log(gameState);
-        // Debug.Log(playerIndex);
     }
     public void ResetTemp(){
         tempObjCor.prefab = Block;
@@ -141,25 +144,16 @@ public class GameManager
                 ChangeState(GameState.GAME);
             }
         }
-        Debug.Log(playerIndex);
-        Debug.Log(gameState);
 
-        // if(playerIndex > maxPlayers && gameState == GameState.GAME){
-        //     playerIndex = 1;
-        //     ChangeState(GameManager.GameState.OBJSELECT);
-        // }
-        // else if(playerIndex > maxPlayers && gameState == GameState.OBJSELECT){
-        //     playerIndex = 1;
-        //     ChangeState(GameManager.GameState.GAME);
-        // }
     }
 
     public void checkLives(){
+
         int dead = 0;
         int contador = 0;
         if(maxPlayers != 1){
             foreach(int player in LifeList){
-                if(player==-1){
+                if(player==0){
                     dead++;
                 }
                 else{
@@ -169,23 +163,44 @@ public class GameManager
 
             }
             if(dead==maxPlayers-1){
+                Debug.Log("END GAME");
                 ChangeState(GameManager.GameState.END);
             }
         }
         else{
-            if(LifeList[0]==-1){
+            if(LifeList[0]==0){
+                Debug.Log("END GAME");
+
                 ChangeState(GameManager.GameState.END);
             }
         }
 
     }
-
+    public void ResetGame(){
+        CanvasHelperPlayerIndex = GameObject.FindWithTag("CanvasHelperText").GetComponent<Text>();
+        CanvasHelperAction = GameObject.FindWithTag("CanvasHelperAction").GetComponent<Text>();
+        CanvasHelperLives = GameObject.FindWithTag("CanvasLives").GetComponent<Text>();
+        gameState = GameState.PLAYERSELECT;
+        CanvasEnd = GameObject.Find("CanvasEnd");
+        CanvasEnd.SetActive(false);
+        CanvasHelperPlayerIndex.text = "GL";
+        CanvasHelperAction.text = "HF";
+        CanvasHelperLives.text = "";
+        playerIndex = 1;
+        maxPlayers = 1;
+        startGame = false;
+        resetGame = false;
+        multiplier = 1f;
+    }
+    
     private GameManager()
     {
+        Walls = GameObject.Find("Walls");
         CanvasHelperPlayerIndex = GameObject.FindWithTag("CanvasHelperText").GetComponent<Text>();
         CanvasHelperAction = GameObject.FindWithTag("CanvasHelperAction").GetComponent<Text>();
         CanvasHelperLives = GameObject.FindWithTag("CanvasLives").GetComponent<Text>();
         CanvasEnd = GameObject.Find("CanvasEnd");
+        CanvasEnd.SetActive(false);
         gameState = GameState.PLAYERSELECT;
         CanvasHelperPlayerIndex.text = "GL";
         CanvasHelperAction.text = "HF";
@@ -193,7 +208,9 @@ public class GameManager
         playerIndex = 1;
         maxPlayers = 1;
         startGame = false;
-        gameEnd = false;
+        resetGame = false;
+        multiplier = 1f;
+
     }
 
 }

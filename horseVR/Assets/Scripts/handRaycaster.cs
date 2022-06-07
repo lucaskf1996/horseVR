@@ -67,6 +67,7 @@ public class handRaycaster : MonoBehaviour
         }
         else if(gm.gameState == GameManager.GameState.END){
             if(e.target.gameObject.tag == "Respawn"){
+                gm.resetGame = true;
                 SceneManager.LoadScene("Planing", LoadSceneMode.Single);
             }
         }
