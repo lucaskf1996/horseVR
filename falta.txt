@@ -1,2 +1,0 @@
-obter os valores de xy no handRaycast (dependendo do objeto, truncar xy para pontos especificos)
-track pad para se mover na cena e selecionar z

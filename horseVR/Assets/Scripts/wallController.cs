@@ -38,7 +38,7 @@ public class wallController : MonoBehaviour
     void Update()
     {
         if((gm.gameState == GameManager.GameState.GAME) && (gm.startGame)){
-            gameObject.transform.position += new Vector3(0f, 0f, -4f * Time.deltaTime* gm.multiplier);
+            gameObject.transform.position += new Vector3(0f, 0f, Time.deltaTime* (-gm.multiplier));
         }
         else if(gm.gameState == GameManager.GameState.ZSELECT){
             Vector2 m = moveAction[hand].axis;
@@ -57,7 +57,7 @@ public class wallController : MonoBehaviour
                 bool validCor  = CheckZIfCordValid(Math.Abs(gameObject.transform.position.z) + 5f);
                 if(validCor){
                     gm.tempObjCor.Z = Math.Abs(gameObject.transform.position.z) + 5f;
-                    if(gm.tempObjCor.type == "Cylinder"){
+                    if(gm.tempObjCor.type == "Cylinder" || gm.tempObjCor.type == "Propeller"){
                         gm.ChangeState(GameManager.GameState.ROTATESELECT);
                     }
                     else{

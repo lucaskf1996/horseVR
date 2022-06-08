@@ -4,7 +4,7 @@ using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
 
-public class barSelect : MonoBehaviour
+public class PropellerRotation : MonoBehaviour
 {
 
     GameManager gm;
@@ -32,7 +32,7 @@ public class barSelect : MonoBehaviour
     void Update()
     {
         
-        if(gm.gameState == GameManager.GameState.ROTATESELECT && gm.tempObjCor.type == "Cylinder"){
+        if(gm.gameState == GameManager.GameState.ROTATESELECT && gm.tempObjCor.type == "Propeller"){
             Vector2 m = moveAction[hand].axis;
             // print(m);
             transform.Rotate (new Vector3 (0, 0, m.y*60) * Time.deltaTime);

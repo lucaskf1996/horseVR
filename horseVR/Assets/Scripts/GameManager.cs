@@ -41,8 +41,8 @@ public class GameManager
             this.rotate = rotate;
         }
     }
-    public List<ObjCordinates> ObjCorList = new List<ObjCordinates>();
-    public List<int> LifeList = new List<int>();
+    public List<ObjCordinates> ObjCorList;
+    public List<int> LifeList;
 
     public ObjCordinates tempObjCor;
 
@@ -84,6 +84,7 @@ public class GameManager
                 GameObject.Find("ObjectSelection").transform.GetChild(value).transform.SendMessage("ResetPos");
             }
             CanvasHelperPlayerIndex.text = "Player "+ playerIndex;
+            Debug.Log("ENTREI");
         }
         if(gameState == GameState.GAME && nextState == GameState.OBJSELECT){
             multiplier+=0.2f;
@@ -92,6 +93,7 @@ public class GameManager
             string scoreBoard = "";
             for(int i = 1; i<=maxPlayers; i++){
                 scoreBoard += "Player " + i + "\n";
+                Debug.Log("ENTREI");
             }
             CanvasHelperLives.text = scoreBoard;
         }
@@ -190,7 +192,9 @@ public class GameManager
         maxPlayers = 1;
         startGame = false;
         resetGame = false;
-        multiplier = 1f;
+        multiplier = 4f;
+        LifeList = new List<int>();
+        ObjCorList = new List<ObjCordinates>();
     }
     
     private GameManager()
@@ -202,15 +206,16 @@ public class GameManager
         CanvasEnd = GameObject.Find("CanvasEnd");
         CanvasEnd.SetActive(false);
         gameState = GameState.PLAYERSELECT;
-        CanvasHelperPlayerIndex.text = "GL";
-        CanvasHelperAction.text = "HF";
-        CanvasHelperLives.text = "";
+        // CanvasHelperPlayerIndex.text = "GL";
+        // CanvasHelperAction.text = "HF";
+        // CanvasHelperLives.text = "";
         playerIndex = 1;
         maxPlayers = 1;
         startGame = false;
         resetGame = false;
-        multiplier = 1f;
-
+        multiplier = 4f;
+        LifeList = new List<int>();
+        ObjCorList = new List<ObjCordinates>();
     }
 
 }
